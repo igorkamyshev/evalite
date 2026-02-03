@@ -1,4 +1,4 @@
-import type { EmbeddingModelV2, LanguageModelV2 } from "@ai-sdk/provider";
+import type { EmbeddingModelV2, LanguageModelV3 } from "@ai-sdk/provider";
 import type { ViteUserConfig } from "vitest/config";
 import type { TestUserConfig } from "vitest/node";
 
@@ -898,7 +898,7 @@ export declare namespace Evalite {
       question: string;
       answer: string;
       groundTruth: string[];
-      model: LanguageModelV2;
+      model: LanguageModelV3;
     };
 
     /**
@@ -908,7 +908,7 @@ export declare namespace Evalite {
       question: string;
       answer: string;
       reference: string;
-      model: LanguageModelV2;
+      model: LanguageModelV3;
       embeddingModel: EmbeddingModelV2<string>;
       weights?: [number, number];
       beta?: number;
@@ -920,7 +920,7 @@ export declare namespace Evalite {
     export type AnswerRelevancyOpts = {
       question: string;
       answer: string;
-      model: LanguageModelV2;
+      model: LanguageModelV3;
       embeddingModel: EmbeddingModelV2<string>;
     };
 
@@ -940,7 +940,7 @@ export declare namespace Evalite {
       question: string;
       answer: string;
       groundTruth: string[];
-      model: LanguageModelV2;
+      model: LanguageModelV3;
     };
 
     /**
@@ -951,7 +951,7 @@ export declare namespace Evalite {
       answer: string;
       reference: string;
       groundTruth: string[];
-      model: LanguageModelV2;
+      model: LanguageModelV3;
       mode?: "relevant" | "irrelevant";
     };
 
