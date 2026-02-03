@@ -48,7 +48,7 @@
     "./in-memory-storage": "./dist/storage/in-memory.js"
   },
   "dependencies": {
-    "@ai-sdk/provider": "^2.0.0",
+    "@ai-sdk/provider": "^3",
     "@fastify/static": "^8.2.0",
     "@fastify/websocket": "11.2.0",
     "@stricli/auto-complete": "^1.2.0",
@@ -65,7 +65,7 @@
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
     "@types/ws": "^8.18.1",
-    "ai": "^5.0.59",
+    "ai": "^6",
     "autoevals": "^0.0.131",
     "unstorage": "^1.17.1"
   }
