@@ -1,7 +1,10 @@
 {
-  "name": "evalite",
-  "version": "1.0.0-beta.15",
+  "name": "@kamyshev/evalite",
+  "version": "1.0.0-beta.16",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Test your LLM-powered apps with a TypeScript-native, Vitest-based eval runner. No API key required.",
   "homepage": "https://evalite.dev",
   "keywords": [
@@ -71,7 +74,7 @@
   },
   "peerDependencies": {
     "better-sqlite3": "^11.6.0",
-    "ai": "^5"
+    "ai": "^6"
   },
   "peerDependenciesMeta": {
     "better-sqlite3": {
@@ -82,11 +85,11 @@
     }
   },
   "devDependencies": {
-    "@ai-sdk/provider": "^2.0.0",
+    "@ai-sdk/provider": "^3",
     "@types/better-sqlite3": "^7.6.13",
     "@types/js-levenshtein": "^1.1.3",
     "@types/ws": "^8.18.1",
-    "ai": "^5.0.59",
+    "ai": "^6",
     "better-sqlite3": "^11.6.0",
     "unstorage": "^1.17.1"
   }
