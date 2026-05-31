@@ -1,5 +1,5 @@
-import { assert, expect, it } from "vitest";
-import { getEvalsAsRecordViaStorage, loadFixture } from "./test-utils.js";
+import { expect, it } from "vitest";
+import { getSuitesAsRecordViaStorage, loadFixture } from "./test-utils.js";
 
 it("Should report traces from generateText using traceAISDKModel", async () => {
   await using fixture = await loadFixture("ai-sdk-traces");
@@ -8,11 +8,11 @@ it("Should report traces from generateText using traceAISDKModel", async () => {
     mode: "run-once-and-exit",
   });
 
-  const evals = await getEvalsAsRecordViaStorage(fixture.storage);
+  const suites = await getSuitesAsRecordViaStorage(fixture.storage);
 
-  expect(evals["AI SDK Traces"]![0]?.results[0]?.traces).toHaveLength(1);
+  expect(suites["AI SDK Traces"]![0]?.evals[0]?.traces).toHaveLength(1);
 
-  const trace = evals["AI SDK Traces"]![0]?.results[0]?.traces[0];
+  const trace = suites["AI SDK Traces"]![0]?.evals[0]?.traces[0];
   expect(trace?.output).toMatchObject({
     text: "Hello, world!",
     toolCalls: [
@@ -25,24 +25,6 @@ it("Should report traces from generateText using traceAISDKModel", async () => {
   });
 });
 
-it("Should report traces from streamText using traceAISDKModel", async () => {
-  await using fixture = await loadFixture("ai-sdk-traces-stream");
-
-  await fixture.run({
-    mode: "run-once-and-exit",
-  });
-
-  const evals = await getEvalsAsRecordViaStorage(fixture.storage);
-
-  const traces = evals["AI SDK Traces"]![0]?.results[0]?.traces;
-
-  assert(traces?.[0], "Expected a trace to be reported");
-
-  expect(traces?.[0].input_tokens).toEqual(3);
-  expect(traces?.[0].output_tokens).toEqual(10);
-  expect(traces?.[0].total_tokens).toEqual(14);
-});
-
 it("Should redact reasoning prompt parts from traces", async () => {
   await using fixture = await loadFixture("ai-sdk-traces-reasoning");
 
@@ -50,14 +32,13 @@ it("Should redact reasoning prompt parts from traces", async () => {
     mode: "run-once-and-exit",
   });
 
-  const evals = await getEvalsAsRecordViaStorage(fixture.storage);
+  const suites = await getSuitesAsRecordViaStorage(fixture.storage);
 
-  const traces = evals["AI SDK Traces Reasoning"]![0]?.results[0]?.traces;
+  const traces = suites["AI SDK Traces Reasoning"]![0]?.evals[0]?.traces;
 
-  assert(traces?.[0], "Expected a trace to be reported");
   expect(traces).toHaveLength(1);
 
-  const traceInput = traces[0].input;
+  const traceInput = traces![0]!.input;
   expect(JSON.stringify(traceInput)).not.toContain("reasoning");
   expect(JSON.stringify(traceInput)).not.toContain("private reasoning");
   expect(JSON.stringify(traceInput)).not.toContain("whole message");

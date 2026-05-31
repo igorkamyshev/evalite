@@ -1,13 +1,15 @@
-import { MockLanguageModelV2 } from "ai/test";
-import { Levenshtein } from "autoevals";
+import { MockLanguageModelV3 } from "ai/test";
 import { evalite } from "evalite";
-import { traceAISDKModel } from "evalite/ai-sdk";
+import { wrapAISDKModel } from "evalite/ai-sdk";
 
-const model = new MockLanguageModelV2({
+const model = new MockLanguageModelV3({
   doGenerate: async () => ({
     rawCall: { rawPrompt: null, rawSettings: {} },
-    finishReason: "stop",
-    usage: { inputTokens: 8, outputTokens: 4, totalTokens: 12 },
+    finishReason: { unified: "stop", raw: "stop" },
+    usage: {
+      inputTokens: { total: 8, noCache: 0, cacheRead: 0, cacheWrite: 0 },
+      outputTokens: { total: 4, text: 4, reasoning: 0 },
+    },
     content: [{ type: "text", text: "4" }],
     warnings: [],
     providerMetadata: undefined,
@@ -16,7 +18,7 @@ const model = new MockLanguageModelV2({
   }),
 });
 
-const tracedModel = traceAISDKModel(model);
+const tracedModel = wrapAISDKModel(model);
 
 evalite("AI SDK Traces Reasoning", {
   data: () => {
@@ -81,5 +83,10 @@ evalite("AI SDK Traces Reasoning", {
       .map((content) => content.text)
       .join("");
   },
-  scorers: [Levenshtein],
+  scorers: [
+    {
+      name: "Pass",
+      scorer: () => ({ score: 1 }),
+    },
+  ],
 });
